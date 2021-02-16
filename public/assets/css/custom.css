@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #fff;
+}
+
+.auth.theme-two .banner-section .slide-content.bg-1 {
+  background-size: cover;
+  background-color: #1c21b9;
+  background: #1c21b9 !important;
+}
+
+.sidebar .nav .nav-item .nav-link {
+  align-items: center;
+  display: flex;
+  padding: 16px 35px;
+  white-space: nowrap;
+  height: 52px;
+  color: #ffffff;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+}
+
+.sidebar .nav .nav-item .nav-link .menu-title {
+  color: inherit;
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+  width: 100%;
+  display: inline-block;
+}

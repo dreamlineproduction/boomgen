@@ -4,7 +4,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Admin Dashboard</title>
+  <title>Boom-Gen Admin Dashboard</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{ asset('assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css') }}">
@@ -16,6 +16,7 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
 </head>
@@ -234,8 +235,8 @@
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018
-              <a href="http://bootstrapdash.com" target="_blank">BootstrapDash</a>. All rights reserved.</span>
+          <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © <?php echo date("Y");?>
+              <a href="http://bootstrapdash.com" target="_blank">Boom-Gen</a>. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with
               <i class="mdi mdi-heart-outline text-danger"></i>
             </span>
