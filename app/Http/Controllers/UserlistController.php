@@ -27,7 +27,11 @@ class UserlistController extends Controller
 
     public static function getCouponSeller($id){
         $coupon = Coupon::find($id);
-        $couponseller = $coupon->logo;
+        if(isset($coupon->logo)){
+            $couponseller = $coupon->logo;
+        }else{
+            $couponseller = "";
+        }
         return $couponseller;
     }
 

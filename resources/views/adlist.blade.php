@@ -19,9 +19,10 @@
                       </tr>
                     </thead>
                     <tbody>
+                        @php $count = 1 @endphp
                         @foreach ($ads as $ad) 
                           <tr>
-                            <td>{{ $ad->id}}</td>
+                            <td>{{ $count++}}</td>
                             @php $path = url("/".$ad->logo); @endphp
                             <td> <img src="{{ $path }}" alt="logo" /></td>
                             <td>{{ $ad->title}}</td>

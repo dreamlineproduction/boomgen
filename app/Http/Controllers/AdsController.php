@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ads;
+use App\User;
 class AdsController extends Controller
 {
     public function createadspage()
     {
-        return view('createad');
+        $users = User::where('type','=','user')->get();
+        return view('createad',['users'=>$users]);
     }
 
     public function createads()
@@ -31,11 +33,17 @@ class AdsController extends Controller
             return redirect()->back()->with("error","Please upload an image.")->withInput();
         }
 
+        if(isset($data['userlist'])){
+            $userlist =implode(",",$request->input('userlist'));
+        }else{
+            $userlist = "all";
+        }
 
         Ads::create([
             'title' => $data['title'],
             'description' => $data['description'],
             'logo' => $adsImage_url,
+            'selecteduser' => $userlist,
         ]);
         return redirect()->back()->with("success","Advertisement Created Successfully.");
     }
@@ -46,13 +54,39 @@ class AdsController extends Controller
         return view('adlist',['ads'=>$ads]);
     }
 
-    public function getads()
+    public function getads(Request $request)
     {
+        $req = $request->all();
+        $id = $req["id"];
         $ads = Ads::all();
+        
         foreach ($ads as $ad ){
+            $ad["selected"] = "0";
+            $selectedusers = explode(',', $ad->selecteduser);
+            foreach ($selectedusers as $selecteduser ){
+                if($selecteduser == $id || $selecteduser == "all"){
+                    $ad["selected"] = "1";
+                }
+            }
+            
             $ad["path"] = url("/".$ad['logo']);
+        }  
+        
+        foreach($ads as $ad)
+        {
+            if($ad["selected"] == "1"){
+                $filtered[] = $ad->toArray();
+            }
         }
-        return response()->json($ads, 200);
+
+        if(isset($filtered)){
+            return $filtered;
+        }else{
+            $coupon = array(
+                "error" => "No more coupon available for you"
+            );
+            return response()->json($coupon, 200);
+        }
     }
 }
 

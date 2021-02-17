@@ -21,7 +21,7 @@
                           {{ session('success') }}
                       </div>
                   @endif
-                  <h4 class="card-title">Complete form validation</h4>
+                  <h4 class="card-title">Create User</h4>
                   <form class="cmxform" id="signupForm1"  method="POST" action="{{ route('createuser') }}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                       <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">

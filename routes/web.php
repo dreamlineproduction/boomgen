@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/createuser', 'UsersController@createuserpage')->name('createuser');
     Route::post('/createuser', 'UsersController@createuser')->name('createuser');
     Route::post('/updateuser', 'UsersController@updateuser')->name('updateuser');
+    Route::post('/updateadmin', 'UsersController@updateadmin')->name('updateadmin');
     Route::get('/createcoupon', 'CouponController@couponpage')->name('coupon');
     Route::get('/coupon', 'CouponController@couponlist')->name('coupon');
     Route::get('/adslist', 'AdsController@adslist')->name('adslist');
@@ -31,6 +32,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/createcoupon', 'CouponController@createcoupon')->name('createcoupon');
     Route::get('/changepassword', 'UsersController@changepasswordpage')->name('changepassword');
     Route::post('/changePassword','UsersController@changePassword')->name('changePassword');
+    Route::get('/manageaccounts', 'UsersController@manageaccountpage')->name('manageaccounts');
+    Route::post('/manageaccount','UsersController@manageaccount')->name('manageaccount');
     Route::post('/blockuser', 'UsersController@blockuser')->name('blockuser');
     Route::post('/deleteuser', 'UsersController@deleteuser')->name('deleteuser');
     // Route::get('/login', 'UsersController@loginpage')->name('login');
