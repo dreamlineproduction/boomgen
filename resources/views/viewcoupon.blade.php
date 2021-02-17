@@ -9,10 +9,16 @@
             <div class="row">
             <div class="col-12 table-responsive">
                 <div class="col-12 justify-content-center text-center">
-                    @php $path = url("/".$coupon->logo); @endphp
-                    <a href="{{$path}}">
-                        <img src="{{$path}}" style="max-width: 200px; height: auto"/>
-                    </a>
+                    @php 
+                    if($coupon->logo != ""){
+                        $path = url("/".$coupon->logo);
+                    }
+                    @endphp
+                    @if($coupon->logo != "")
+                        <a href="{{$path}}">
+                            <img src="{{$path}}" style="max-width: 200px; height: auto"/>
+                        </a>
+                    @endif
                 </div>
                 <table class="table table-borderless w-100 mt-4 ">
                     <tr>

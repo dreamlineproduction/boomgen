@@ -57,6 +57,15 @@
                     @endif
                   </div>
                  
+                  <div class="form-group">
+                    <label for="userlist">Users</label>
+                    <select class="js-example-basic-multiple w-100" multiple="multiple" name="userlist[]" value="{{ old('userlist[]') }}">
+                      @foreach ($users as $user) 
+                      <option value="{{$user->id}}">{{$user->firstname}} {{$user->lastname}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
                   <button type="submit" class="btn btn-success mr-2">Submit</button>
                   <a class="btn btn-light" href="{{ route('home') }}">Cancel</a>
               </form>

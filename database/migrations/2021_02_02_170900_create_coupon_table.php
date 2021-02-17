@@ -24,7 +24,7 @@ class CreateCouponTable extends Migration
             $table->string('amount');
             $table->string('expirydate');
             $table->enum('status', ['0', '1']);
-            $table->string("selecteduser");
+            $table->string("selecteduser", 10000);
             $table->timestamps();
         });
     }

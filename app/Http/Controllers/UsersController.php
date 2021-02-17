@@ -30,12 +30,19 @@ class UsersController extends Controller
         return view('userlist',['users'=>$users]);
     }
     
+    public function manageaccountpage(Request $request)
+    {   
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        return view('manageaccount',['user'=>$user]);
+    }
+
     public function edituser($id)
     {   
         $user = User::find($id);
         return view('edituser',['user'=>$user]);
     }
-
+    
     public function blockuser(Request $request)
     {   
         $request = request();
@@ -162,11 +169,14 @@ class UsersController extends Controller
         ];
         
         $data = $request->all();
-         
+        
+        $id = $data['id'];
+        
         $input     = $request->only('firstname', 'lastname', 'username', 'phonenumber', 'address1', 'address2', 'state', 'zip');
         $validator = Validator::make($input, $rules);
         
-        
+        $user = User::find($id);
+
         if ($validator->fails()) {
             return redirect()->back()->with("error","Something went wrong.")->withInput();
         }
@@ -187,8 +197,67 @@ class UsersController extends Controller
         $user->zip = $data['zip'];
         $user->save();
 
-        return redirect()->back()->with("success","User Updated Successfully.")->withInput();
+        return redirect()->back()->with("success","User Updated Successfully.");
     }
+
+    protected function updateadmin(Request $request)
+    {
+        if($request->hasFile('profilepicture')){
+            $allowedExtensions = ["jpg" , "jpeg", "png"]; 
+            $couponImage = $request->file('profilepicture');
+            $uploadFileExtension =  $couponImage->getClientOriginalExtension();
+            if (in_array($uploadFileExtension , $allowedExtensions)){
+                $couponImageSaveAsName = time() . Auth::id() . "-profile." . $uploadFileExtension;
+                $upload_path = 'profile_images/';
+                $couponImage_url = $upload_path . $couponImageSaveAsName;
+                $success = $couponImage->move($upload_path, $couponImageSaveAsName);
+            }else{
+                return redirect()->back()->with("error","Please upload a valid image with extensions JPEG, JPG & PNG.")->withInput();
+            }
+        }
+
+        $rules = [
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+        ];
+        
+        $data = $request->all();
+        
+        $id = $data['id'];
+        
+        $input     = $request->only('firstname', 'lastname', 'email');
+        $validator = Validator::make($input, $rules);
+        
+        $user = User::find($id);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with("error","Something went wrong.")->withInput();
+        }
+
+        if ($user->count() == 0) {
+            $user = array(
+                "error" => "User not found"
+            );
+            return redirect()->back()->with("error","Something went wrong.")->withInput();
+        }
+
+        if($request->hasFile('profilepicture')){
+            $user->firstname = $data['firstname'];
+            $user->lastname = $data['lastname'];
+            $user->email = $data['email'];
+            $user->image = $couponImage_url;
+            $user->save();
+        }else{
+            $user->firstname = $data['firstname'];
+            $user->lastname = $data['lastname'];
+            $user->email = $data['email'];
+            $user->save();
+        }
+
+        return redirect()->back()->with("success","User Updated Successfully.");
+    }
+
 
     public function loginpage()
     {   

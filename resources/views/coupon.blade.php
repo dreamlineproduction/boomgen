@@ -12,13 +12,13 @@
     <div class="content-wrapper">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Data table</h4>
+              <h4 class="card-title">Coupon List</h4>
               <div class="row">
                 <div class="col-12 table-responsive">
                   <table id="order-listing" class="table">
                     <thead>
                       <tr>
-                        <th>Order #</th>
+                        <th>S.No #</th>
                         <th>Logo</th>
                         <th>Title</th>
                         <th>Description</th>
@@ -29,11 +29,20 @@
                       </tr>
                     </thead>
                     <tbody>
+                        @php $count = 1; @endphp
                         @foreach ($coupons as $coupon) 
                           <tr>
-                            <td>{{ $coupon->id}}</td>
-                            @php $path = url("/".$coupon->logo); @endphp
-                            <td> <img src="{{ $path }}" alt="logo" /></td>
+                            <td>{{ $count++}}</td>
+                            <td> 
+                              @php
+                                if($coupon->logo){
+                                  $path = url("/".$coupon->logo);
+                                }
+                              @endphp
+                              @if($coupon->logo)
+                                <img src="{{ $path }}" alt="logo" />
+                              @endif
+                            </td>
                             <td>{{ $coupon->title}}</td>
                             <td>{{ $coupon->description}}</td>
                             <td>

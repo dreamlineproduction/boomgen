@@ -5,13 +5,13 @@
     <div class="content-wrapper">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Data table</h4>
+              <h4 class="card-title">Redeemed List</h4>
               <div class="row">
                 <div class="col-12 table-responsive">
                   <table id="order-listing" class="table">
                     <thead>
                       <tr>
-                        <th>SNo</th>
+                        <th>S.No #</th>
                         <th>Customer Redeemed</th>
                         <th>Date Of Redeem</th>
                         <th>Coupon Seller</th>
@@ -20,15 +20,21 @@
                       </tr>
                     </thead>
                     <tbody>
-                    @foreach ($userlist as $userlist) 
-                        <td>{{ $userlist->id}}</td>
+                      @php $count = 1 @endphp
+                      @foreach ($userlist as $userlist) 
+                        <td>{{ $count++}}</td>
                         <td>{{App\Http\Controllers\UserlistController::getCustomerName($userlist->customerid)}}</td>
                         <td>{{ $userlist->purchasedon}}</td>
                         <td>
                           @php 
                             $coupon = App\Http\Controllers\UserlistController::getCouponSeller($userlist->couponid);
-                            $path = url("/".$coupon); @endphp
-                          <img src="{{ $path }}"/>
+                            if($coupon != ""){
+                              $path = url("/".$coupon);
+                            }
+                            @endphp
+                            @if($coupon != "")
+                              <img src="{{ $path }}"/>
+                            @endif
                         </td>
                         <td>{{App\Http\Controllers\UserlistController::getCouponCode($userlist->couponid)}}</td></td>
                         <td>

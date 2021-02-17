@@ -55,7 +55,7 @@
                 <div class="inner">
                   <div class="inner">
                     <span class="profile-text font-weight-bold">{{$username}}</span>
-                    <small class="profile-text small">Admin</small>
+                    <small class="profile-text small">{{Auth::user()->firstname}} {{Auth::user()->lastname}}</small>
                   </div>
                   <div class="inner">
                     <div class="icon-wrapper">
@@ -66,7 +66,7 @@
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-              <a class="dropdown-item mt-2">
+              <a class="dropdown-item mt-2" href="{{ route('manageaccounts') }}">
                 Manage Accounts
               </a>
               <a class="dropdown-item" href="{{ route('changepassword') }}">
@@ -115,7 +115,7 @@
         <ul class="nav">
           <li class="nav-item nav-profile">
             <img src="{{$path}}" alt="profile image">
-            <p class="text-center font-weight-medium">Admin</p>
+            <p class="text-center font-weight-medium">{{Auth::user()->firstname}} {{Auth::user()->lastname}}</p>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('home') }}">

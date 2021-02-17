@@ -19,7 +19,7 @@
                           {{ session('success') }}
                       </div>
                   @endif
-                  <h4 class="card-title">Coupon form Validation</h4>
+                  <h4 class="card-title">Create Coupon</h4>
                   <form class="cmxform" id="signupForm2"  method="POST" action="{{ route('createcoupon') }}" enctype="multipart/form-data">
                       {{ csrf_field() }}
                       <div class="form-group">
@@ -123,7 +123,7 @@
                         <label for="userlist">Users</label>
                         <select class="js-example-basic-multiple w-100" multiple="multiple" name="userlist[]" value="{{ old('userlist[]') }}">
                           @foreach ($users as $user) 
-                          <option value="{{$user->id}}">{{$user->firstname}} {{$user->firstname}}</option>
+                          <option value="{{$user->id}}">{{$user->firstname}} {{$user->lastname}}</option>
                           @endforeach
                         </select>
                       </div>

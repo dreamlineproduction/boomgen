@@ -5,7 +5,7 @@
     <div class="content-wrapper">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Data table</h4>
+              <h4 class="card-title">Users List</h4>
               @if (session('error'))
                 <div class="alert alert-danger">
                     {{ session('error') }}
@@ -21,7 +21,7 @@
                   <table id="order-listing" class="table">
                     <thead>
                       <tr>
-                        <th>SNo</th>
+                        <th>S.No #</th>
                         <th>Name</th>
                         <th>Image</th>
                         <th>Username</th>
@@ -36,7 +36,7 @@
                     </thead>
                     <tbody>
                       @php $count = 1 @endphp
-                    @foreach ($users as $user) 
+                      @foreach ($users as $user) 
                         <td>{{ $count++}}</td>
                         <td>{{ $user->firstname}} {{ $user->lastname}}</td>
                         <td>
