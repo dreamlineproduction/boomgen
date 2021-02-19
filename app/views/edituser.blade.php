@@ -53,27 +53,12 @@
                   </div>
                   <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     <label for="email">Email</label>
-                    <input id="email" class="form-control" name="email" value="{{$user->email}}" type="email" required>
+                    <input id="email" class="form-control" name="email" value="{{$user->email}}" type="email" required disabled>
                     @if ($errors->has('email'))
                         <span class="help-block">
                             <strong>{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
-                  </div>
-                  <div class="form-group">
-                    <label>Profile Picture</label>
-                    <input id="profilepicture" type="file" name="profilepicture" class="file-upload-default{{ $errors->has('profilepicture') ? ' has-error' : '' }}" value="{{ old('profilepicture') }}">
-                    <div class="input-group col-xs-12">
-                      <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" >
-                      <span class="input-group-append">
-                        <button class="file-upload-browse btn btn-info" type="button">Upload</button>
-                      </span>
-                      @if ($errors->has('profilepicture'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('profilepicture') }}</strong>
-                        </span>
-                      @endif
-                    </div>
                   </div>
                   <input type="hidden" value="{{$user->id}}" name="id"/>
                   {{-- <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">

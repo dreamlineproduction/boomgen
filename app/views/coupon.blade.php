@@ -22,7 +22,6 @@
                         <th>Logo</th>
                         <th>Title</th>
                         <th>Description</th>
-                        <th>Status</th>
                         <th>Percentage/Fixed Off</th>
                         {{-- <th>Amount</th> --}}
                         <th>Expiry Date</th>
@@ -47,16 +46,7 @@
                             <td>{{ $coupon->title}}</td>
                             <td>{{ $coupon->description}}</td>
                             <td>
-                                @if($coupon->status == "1")
-                                  Redeemed
-                                @elseif(\Carbon\Carbon::now()->addDays(1) ->gt($coupon->expirydate))
-                                  Expired
-                                @else
-                                  Active
-                                @endif
-                            </td>
-                            <td>
-                                @if($coupon->percentage != "") 
+                                @if ($coupon->percentage != "") 
                                   {{ $coupon->percentage}}
                                 @else 
                                   {{ $coupon->fixed}}
