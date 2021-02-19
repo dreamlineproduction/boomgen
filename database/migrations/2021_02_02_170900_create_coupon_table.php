@@ -22,7 +22,7 @@ class CreateCouponTable extends Migration
             $table->string('percentage');
             $table->string('fixed');
             $table->string('amount');
-            $table->string('expirydate');
+            $table->date('expirydate');
             $table->enum('status', ['0', '1']);
             $table->string("selecteduser", 10000);
             $table->timestamps();

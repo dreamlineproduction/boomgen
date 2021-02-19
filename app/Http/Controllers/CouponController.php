@@ -20,6 +20,13 @@ class CouponController extends Controller
     public function createcoupon()
     {
         $request = request();
+        $data = $request->all();
+        $datestring = $data['expirydate'];
+        list($month, $day, $year) = explode('/', $datestring);
+        $date = \DateTime::createFromFormat('Ymd', $year . $month . $day);
+        // echo $date->format('y/m/d');
+        // exit();
+
         if($request->hasFile('logo')){
             $allowedExtensions = ["jpg" , "jpeg", "png"]; 
             $couponImage = $request->file('logo');
@@ -44,7 +51,7 @@ class CouponController extends Controller
         //     'amount' => 'required|string|max:255',
         //     'expirydate' => 'required|string|max:255'
         // ];
-        $data = $request->all();
+        // $data = $request->all();
         
         if ($request->has('percentageoff')) {
             $percentValue =  $data['percentageoff'] . "%";
@@ -77,7 +84,7 @@ class CouponController extends Controller
             'percentage' => $percentValue,
             'fixed' => $fixedvalue,
             'amount' => "0",
-            'expirydate' => $data['expirydate'],
+            'expirydate' => $date,
             'logo' => $couponImage_url,
             'couponcode' => $couponcode,
             'status' => '0',
@@ -118,6 +125,10 @@ class CouponController extends Controller
         $userlists = Userlist::where('customerid','=', $id)->get();
         foreach ($coupons as $coupon ){
             $coupon["selected"] = "0";
+            $coupon["expired"] = "0";
+            if(\Carbon\Carbon::now()->addDays(1) ->gt($coupon->expirydate)){
+                $coupon["expired"] = "1";
+            }
             $selectedusers = explode(',', $coupon->selecteduser);
             foreach ($selectedusers as $selecteduser ){
                 if($selecteduser == $id || $selecteduser == "all"){
@@ -138,7 +149,7 @@ class CouponController extends Controller
         
         foreach($coupons as $coupon)
         {
-            if($coupon["selected"] == "1"){
+            if($coupon["selected"] == "1" && $coupon["expired"] == "0"){
                 $filtered[] = $coupon->toArray();
             }
         }

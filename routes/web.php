@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/createuser', 'UsersController@createuserpage')->name('createuser');
     Route::post('/createuser', 'UsersController@createuser')->name('createuser');
     Route::post('/updateuser', 'UsersController@updateuser')->name('updateuser');
+    Route::post('/updatead', 'AdsController@updatead')->name('updatead');
     Route::post('/updateadmin', 'UsersController@updateadmin')->name('updateadmin');
     Route::get('/createcoupon', 'CouponController@couponpage')->name('coupon');
     Route::get('/coupon', 'CouponController@couponlist')->name('coupon');
@@ -36,11 +37,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/manageaccount','UsersController@manageaccount')->name('manageaccount');
     Route::post('/blockuser', 'UsersController@blockuser')->name('blockuser');
     Route::post('/deleteuser', 'UsersController@deleteuser')->name('deleteuser');
+    Route::post('/deletead', 'AdsController@deletead')->name('deletead');
     // Route::get('/login', 'UsersController@loginpage')->name('login');
     // Route::post('/login', 'UsersController@loginWeb')->name('login');
     
     Route::get('/edituserlist/{id}', 'UserlistController@edituserlist')->name('edituserlist');
     Route::get('/edituser/{id}', 'UsersController@edituser')->name('edituser');
+    Route::get('/editad/{id}', 'AdsController@editad')->name('editad');
+    Route::get('/viewad/{id}', 'AdsController@viewad')->name('viewad');
     Route::get('/viewcoupon/{id}', 'CouponController@viewcoupon')->name('viewcoupon');
     Route::get('/viewuser/{id}', 'UserlistController@viewuser')->name('viewuser');
     Route::get('/home', 'HomeController@index')->name('home');

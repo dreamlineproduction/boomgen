@@ -81,7 +81,7 @@
                       </div>
                       <div class="form-group">
                         <label>Profile Picture</label>
-                        <input id="profilepicture" type="file" name="profilepicture" class="file-upload-default{{ $errors->has('profilepicture') ? ' has-error' : '' }}" value="{{ old('profilepicture') }}">
+                        <input id="profilepicture" type="file" name="profilepicture" required class="file-upload-default{{ $errors->has('profilepicture') ? ' has-error' : '' }}" value="{{ old('profilepicture') }}">
                         <div class="input-group col-xs-12">
                           <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" >
                           <span class="input-group-append">

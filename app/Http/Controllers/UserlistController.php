@@ -74,8 +74,11 @@ class UserlistController extends Controller
         }
 
         $coupon = Coupon::find($id);
-        // $coupon->status = "1";
-        // $coupon->save();
+
+        if($coupon->selecteduser == $uid){
+            $coupon->status = "1";
+            $coupon->save();
+        }
 
         Userlist::create([
             'purchasedon' => $date,

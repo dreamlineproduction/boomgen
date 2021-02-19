@@ -105,7 +105,8 @@ class UsersController extends Controller
                 return redirect()->back()->with("error","Please upload a valid image with extensions JPEG, JPG & PNG.")->withInput();
             }
         }else{
-            return redirect()->back()->with("error","Please upload an image.")->withInput();
+            $upload_path = 'profile_images/';
+            $couponImage_url = $upload_path . "default_user.jpeg";
         }
 
         $rules = [
@@ -149,6 +150,7 @@ class UsersController extends Controller
             'state' => $data['state'],
             'zip' => $data['zip'],
             'type' => $data['type'],
+            'status' => "1",
             'otp' => ""
 
         ]);
@@ -157,6 +159,20 @@ class UsersController extends Controller
     
     protected function updateuser(Request $request)
     {
+        if($request->hasFile('profilepicture')){
+            $allowedExtensions = ["jpg" , "jpeg", "png"]; 
+            $couponImage = $request->file('profilepicture');
+            $uploadFileExtension =  $couponImage->getClientOriginalExtension();
+            if (in_array($uploadFileExtension , $allowedExtensions)){
+                $couponImageSaveAsName = time() . Auth::id() . "-profile." . $uploadFileExtension;
+                $upload_path = 'profile_images/';
+                $couponImage_url = $upload_path . $couponImageSaveAsName;
+                $success = $couponImage->move($upload_path, $couponImageSaveAsName);
+            }else{
+                return redirect()->back()->with("error","Please upload a valid image with extensions JPEG, JPG & PNG.")->withInput();
+            }
+        }
+
         $rules = [
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
@@ -171,11 +187,24 @@ class UsersController extends Controller
         $data = $request->all();
         
         $id = $data['id'];
+
+        $user = User::find($id);
+
+        if($data['email'] != $user->email){
+            $rules1 = [
+                'email' => 'required|string|email|max:255|unique:users',
+            ];
+            $input1     = $request->only('email');
+            $validator1 = Validator::make($input1, $rules1);
+            if ($validator1->fails()) {
+                return redirect()->back()->with("error","Email already exist.")->withInput();
+            }
+        }
         
         $input     = $request->only('firstname', 'lastname', 'username', 'phonenumber', 'address1', 'address2', 'state', 'zip');
         $validator = Validator::make($input, $rules);
         
-        $user = User::find($id);
+        
 
         if ($validator->fails()) {
             return redirect()->back()->with("error","Something went wrong.")->withInput();
@@ -188,14 +217,28 @@ class UsersController extends Controller
             return redirect()->back()->with("error","Something went wrong.")->withInput();
         }
 
-        $user->firstname = $data['firstname'];
-        $user->lastname = $data['lastname'];
-        $user->phonenumber = $data['phonenumber'];
-        $user->address1 = $data['address1'];
-        $user->address2 = $data['address2'];
-        $user->state = $data['state'];
-        $user->zip = $data['zip'];
-        $user->save();
+        if($request->hasFile('profilepicture')){
+            $user->firstname = $data['firstname'];
+            $user->lastname = $data['lastname'];
+            $user->phonenumber = $data['phonenumber'];
+            $user->address1 = $data['address1'];
+            $user->address2 = $data['address2'];
+            $user->state = $data['state'];
+            $user->zip = $data['zip'];
+            $user->email = $data['email'];
+            $user->image = $couponImage_url;
+            $user->save();
+        }else{
+            $user->firstname = $data['firstname'];
+            $user->lastname = $data['lastname'];
+            $user->phonenumber = $data['phonenumber'];
+            $user->address1 = $data['address1'];
+            $user->address2 = $data['address2'];
+            $user->state = $data['state'];
+            $user->zip = $data['zip'];
+            $user->email = $data['email'];
+            $user->save();
+        }
 
         return redirect()->back()->with("success","User Updated Successfully.");
     }
@@ -372,6 +415,7 @@ class UsersController extends Controller
         }
         
         if (\Hash::check($password, $user[0]->password)) {
+            $user[0]->path = url("/".$user[0]->image);
             return response()->json($user, 200);
         } else {
             $user = array(
