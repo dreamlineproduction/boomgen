@@ -4,6 +4,7 @@
 *~
 *.sw[mnpcod]
 .tmp
+.env
 *.tmp
 *.tmp.*
 *.sublime-project
@@ -24,6 +25,7 @@ npm-debug.log*
 /.versions
 /.vscode
 /coverage
+/vendor
 /dist
 /node_modules
 /platforms
